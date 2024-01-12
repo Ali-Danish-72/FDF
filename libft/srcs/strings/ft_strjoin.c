@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 18:51:56 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/08 19:52:27 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/12 16:51:55 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strjoin(char const *string_1, char const *string_2)
 
 	length_string1 = ft_strlen(string_1);
 	length_string2 = ft_strlen(string_2);
-	str = (char *)malloc(sizeof(char) * length_string1 + length_string2 + 1);
+	str = (char *)ft_calloc(length_string1 + length_string2 + 1, sizeof(char));
 	if (!str)
 		return (NULL);
 	ft_strlcpy(str, string_1, length_string1 + 1);

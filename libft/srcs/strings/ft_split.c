@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 19:48:44 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/08 18:19:35 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/12 19:58:50 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ size_t	word_counter(char const *string, char delimiter)
 	return (ctr);
 }
 
-void	free_split(char **split, size_t word_count)
+void	free_split(void **split, size_t word_count)
 {
 	while (split && word_count--)
 		free(*(split + word_count));
@@ -54,7 +54,7 @@ char	**ft_split(char const *string, char delimiter)
 	size_t	word_len;
 
 	word_count = word_counter(string, delimiter);
-	result = malloc((word_count + 1) * sizeof(char *));
+	result = ft_calloc((word_count + 1), sizeof(char *));
 	if (!result)
 		return (NULL);
 	split = result;
@@ -65,7 +65,7 @@ char	**ft_split(char const *string, char delimiter)
 		word_len = word_length(string, delimiter);
 		*result = ft_substr(string, 0, word_len);
 		if (!(*result))
-			return (free_split(split, result - split), NULL);
+			return (free_split((void **)split, result - split), NULL);
 		string += word_len;
 		result++;
 	}

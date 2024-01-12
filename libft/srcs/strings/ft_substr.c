@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/08 17:58:28 by mdanish           #+#    #+#             */
-/*   Updated: 2023/12/23 20:25:04 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/12 16:52:52 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*ft_substr(char const *source, size_t start, size_t len)
 		len--;
 	if (source_length < start || !source_length || (len == (size_t)-1))
 		len = 0;
-	string = (char *)malloc(sizeof(char) * (++len));
+	string = (char *)ft_calloc(++len, sizeof(char));
 	if (!string)
 		return (NULL);
 	ft_strlcpy(string, source + start, len);

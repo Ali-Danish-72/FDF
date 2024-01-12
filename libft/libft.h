@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 15:21:19 by mdanish           #+#    #+#             */
-/*   Updated: 2023/12/24 15:34:11 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/11 16:29:19 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	ft_putstr_fd(char *string, int fd);
 /*****************************************************************************/
 /*								STRINGS										 */
 /*****************************************************************************/
-void	free_split(char **split, size_t word_count);
+void	free_split(void **split, size_t word_count);
 char	**ft_split(char const *source, char delimiters);
 char	*ft_strchr(char const *string, int character);
 char	*ft_strdup(char const *string);

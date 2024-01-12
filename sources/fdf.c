@@ -6,11 +6,11 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:25:50 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/08 19:55:39 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/12 20:29:58 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "../fdf.h"
 
 int	print_error_message(int status)
 {
@@ -26,6 +26,12 @@ int	print_error_message(int status)
 		ft_printf(2, "%s\nMalloc during map join failed.", strerror(errno));
 	else if (status == 6)
 		ft_printf(2, "%s\nMalloc during map split failed.", strerror(errno));
+	else if (status == 7)
+		ft_printf(2, "%s\nMalloc during value split failed.", strerror(errno));
+	else if (status == 8)
+		ft_printf(2, "%s\nMalloc during color split failed.", strerror(errno));
+	return (status);
+}
 	// else if (status == 9)
 	// 	ft_printf(2, "%s. Trimming the qoutations failed.\n", strerror(errno));
 	// else if (status == 11)
@@ -34,40 +40,18 @@ int	print_error_message(int status)
 	// 	ft_printf(2, "Open quotes detected in the command or its arguments\n");
 	// else if (status == 13)
 	// 	ft_printf(2, "Use this:\n./pipex here_doc LIMITER cmd cmd1 file\n");
-	return (status);
-}
 
 void	call_exit(int status, t_fdf fdf)
 {
-	free_split(fdf.parsed_map, word_counter(fdf.complete_map, '\n'));
-	free(fdf.complete_map);
+	free_split((void **)fdf.parsed_map, fdf.map_height);
+	free_split((void **)fdf.map_colors, fdf.map_height);
+	free_split((void **)fdf.map_numbers, fdf.map_height);
+	free(fdf.single_line);
 	close(fdf.map_fd);
 	exit(print_error_message(status));
 }
 
-int	parse(t_fdf *fdf, char *map_path)
-{
-	fdf->map_fd = open(map_path, O_RDONLY);
-	if (fdf->map_fd < 0)
-		return (print_error_message(3));
-	fdf->complete_map = NULL;
-	fdf->map_line = get_next_line(fdf->map_fd);
-	if (!fdf->map_line)
-		call_exit(4, *fdf);
-	while (fdf->map_line)
-	{
-		fdf->complete_map = ft_strjoin_free(fdf->complete_map, fdf->map_line, 3);
-		if (!fdf->complete_map)
-			call_exit(5, *fdf);
-		fdf->map_line = get_next_line(fdf->map_fd);
-	}
-	fdf->parsed_map = ft_split(fdf->complete_map, '\n');
-	if (!fdf->parsed_map)
-		call_exit(6, *fdf);
-	return (0);
-}
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_fdf	fdf;
 
@@ -77,5 +61,9 @@ int main(int argc, char **argv)
 		return (print_error_message(2));
 	if (parse(&fdf, *(argv + 1)))
 		return (print_error_message(3));
+	fdf.mlx_data = mlx_init();
+	fdf.mlx_window = mlx_new_window(fdf.mlx_data, 1600, 1200,
+			"mdanish's FDF projection");
+	mlx_loop(fdf.mlx_data);
 	call_exit(0, fdf);
 }

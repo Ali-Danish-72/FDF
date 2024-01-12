@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 16:58:49 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/08 16:16:54 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/12 16:52:29 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*ft_strtrim(char const *string, char const *set, int to_free)
 		end--;
 	if (start == string && end == (string + string_length))
 		return ((char *)string);
-	trim = (char *)malloc(end - start + 2);
+	trim = (char *)ft_calloc(end - start + 2, sizeof(char));
 	if (!trim)
 		return (NULL);
 	ft_strlcpy(trim, start, end - start + 2);

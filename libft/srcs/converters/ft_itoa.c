@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/16 12:21:42 by mdanish           #+#    #+#             */
-/*   Updated: 2023/12/23 20:39:51 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/12 18:36:06 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_itoa(long num)
 	char	*string;
 
 	counter = digit_counter(num);
-	string = (char *)malloc(sizeof(char) * (counter + 1));
+	string = (char *)ft_calloc((counter + 1), sizeof(char));
 	if (!string)
 		return (NULL);
 	*(string + counter) = '\0';
