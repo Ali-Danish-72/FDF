@@ -6,15 +6,15 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/03 15:09:18 by mdanish           #+#    #+#             */
-/*   Updated: 2023/12/23 20:40:47 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/13 20:47:23 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-int	ft_isalpha(int character)
+int	ft_isalpha(int letter)
 {
-	if ((character > 64 && character < 91) || (character > 96 && character < 123))
+	if ((letter > 64 && letter < 91) || (letter > 96 && letter < 123))
 		return (1);
 	return (0);
 }

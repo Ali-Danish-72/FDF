@@ -18,22 +18,34 @@
 # include <errno.h>
 # include <math.h>
 
+typedef struct s_mlx
+{
+	int			bits_per_pixel;
+	int			size_line;
+	int			endian;
+	char		*image_address;
+	void		*mlx;
+	void		*window;
+	void		*image;
+}				t_mlx;
+
 typedef struct s_fdf
 {
 	int			map_fd;
 	int			map_height;
 	int			map_width;
+	int			size_x;
+	int			size_y;
 	int			**map_numbers;
 	int			**map_colors;
 	char		*map_line;
 	char		*single_line;
 	char		**parsed_map;
-	void		*mlx_data;
-	void		*mlx_window;
+	t_mlx		mlx;
 }				t_fdf;
 
 /*		Error Handling	*/
-void	call_exit(int status, t_fdf fdf);
+int		call_exit(int status, t_fdf fdf);
 int		print_error_message(int status);
 
 /*		Parsing			*/

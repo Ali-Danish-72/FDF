@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 18:20:59 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/12 20:22:36 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/13 15:58:10 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	extract_values(t_fdf *fdf)
 		extract_heights_and_colours(fdf, ++index, values);
 		free_split((void **)values, fdf->map_width);
 	}
+	fdf->size_x = 1600;
+	fdf->size_y = 1200;
 }
 
 int	parse(t_fdf *fdf, char *map_path)
@@ -110,5 +112,6 @@ int	parse(t_fdf *fdf, char *map_path)
 	if (!fdf->parsed_map)
 		call_exit(6, *fdf);
 	extract_values(fdf);
+	free(fdf->single_line);
 	return (0);
 }
