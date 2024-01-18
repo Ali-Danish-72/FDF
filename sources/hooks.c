@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:35:33 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/16 19:09:00 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/18 18:36:10 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int	identify_key(int key_code, t_fdf *fdf)
 	if (key_code == 53)
 		destroy_window(fdf);							/*Destroy window and exit*/
 	else if (key_code == 24)
-		printf("Zoom in\n");							/*Zoom in*/
+		zoom_in(fdf);									/*Zoom in*/
 	else if (key_code == 27)
-		printf("Zoom out\n");							/*Zoom out*/
+		zoom_out(fdf);									/*Zoom out*/
 	else if (key_code == 18)
 		isometric_view(fdf);							/*Projection 1*/
 	else if (key_code == 19)
@@ -46,24 +46,24 @@ int	identify_key(int key_code, t_fdf *fdf)
 	else if (key_code == 21)
 		top_view(fdf);									/*Projection 4*/
 	else if (key_code == 123)
-		printf("Translate left\n");						/*Translate left*/
+		translate_x(key_code, fdf);						/*Translate left*/
 	else if (key_code == 124)
-		printf("Translate right\n");					/*Translate right*/
-	else if (key_code == 126)
-		printf("Translate up\n");						/*Translate up*/
+		translate_x(key_code, fdf);						/*Translate right*/
 	else if (key_code == 125)
-		printf("Translate down\n");						/*Translate down*/
-	else
-		rotation_keys(key_code, fdf);
+		translate_y(key_code, fdf);						/*Translate up*/
+	else if (key_code == 126)
+		translate_y(key_code, fdf);						/*Translate down*/
+	rotation_keys(key_code, fdf);
 	return (0);
 }
 
-int	identify_mouse(int mouse_code, t_fdf *fdf)
+int	identify_mouse(int mouse_code, int x, int y, t_fdf *fdf)
 {
-	(void)fdf;
+	(void)x;
+	(void)y;
 	if (mouse_code == 4)
-		printf("Zoom in\n");							/*Zoom in*/
+		zoom_in(fdf);									/*Zoom in*/
 	else if (mouse_code == 5)
-		printf("Zoom out\n");							/*Zoom out*/
+		zoom_out(fdf);									/*Zoom out*/
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 18:20:59 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/16 19:19:36 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/18 19:56:31 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,20 @@ void	extract_values(t_fdf *fdf)
 		extract_heights_and_colours(fdf, ++index, values);
 		free_split((void **)values, fdf->map_width);
 	}
+}
+
+void	initialise_constants(t_fdf *fdf)
+{
+	fdf->map_height = 0;
+	fdf->parsed_map = NULL;
+	fdf->single_line = NULL;
+	fdf->map_colors = NULL;
+	fdf->map_numbers = NULL;
 	fdf->size_x = 1600;
 	fdf->size_y = 1200;
-	fdf->sp = 30;
+	fdf->spacing = 30;
+	fdf->translate_x = 0;
+	fdf->translate_y = 0;
 }
 
 int	parse(t_fdf *fdf, char *map_path)
@@ -93,11 +104,7 @@ int	parse(t_fdf *fdf, char *map_path)
 	fdf->map_fd = open(map_path, O_RDONLY);
 	if (fdf->map_fd < 0)
 		return (3);
-	fdf->map_height = 0;
-	fdf->parsed_map = NULL;
-	fdf->single_line = NULL;
-	fdf->map_colors = NULL;
-	fdf->map_numbers = NULL;
+	initialise_constants(fdf);
 	fdf->map_line = get_next_line(fdf->map_fd);
 	if (!fdf->map_line)
 		call_exit(4, *fdf);
