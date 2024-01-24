@@ -51,6 +51,7 @@ typedef enum e_projection{
 
 typedef struct s_fdf
 {
+	int			colour;
 	int			map_fd;
 	int			map_height;
 	int			map_width;
@@ -59,10 +60,20 @@ typedef struct s_fdf
 	int			spacing;
 	int			translate_x;
 	int			translate_y;
-	int			x;
+	int			final_x;
 	int			x_offset;
-	int			y;
+	int			final_y;
 	int			y_offset;
+	int			x_1;
+	int			y_1;
+	int			x_2;
+	int			y_2;
+	double		rot1;
+	double		rot2;
+	double		rot3;
+	double		rot4;
+	double		rot5;
+	double		rot6;
 	int			**map_numbers;
 	int			**map_colors;
 	char		*map_line;
@@ -95,7 +106,8 @@ void	side_view(t_fdf *fdf);
 void	top_view(t_fdf *fdf);
 
 /*		Window Management	*/
-void	dda(int *x, int *y, int colour, t_fdf *fdf);
+void	calculate_offset(t_fdf *fdf);
+void	dda(int *x, int *y, t_fdf *fdf);
 int		destroy_window(t_fdf *fdf);
 void	initialise_window(t_fdf fdf);
 

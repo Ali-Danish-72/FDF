@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 15:21:19 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/11 16:29:19 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/24 16:54:57 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int		ft_toupper(int character);
 /*****************************************************************************/
 size_t	word_counter(char const *source, char delimiters);
 size_t	word_length(char const *source, char delimiters);
-size_t	ft_absolute(long number);
 
 /*****************************************************************************/
 /*								FT_PRINTF									 */

@@ -15,7 +15,7 @@ MLX_DIR = ./minilibx/
 MLX = $(MLX_DIR)libmlx.a
 HEADERS = ./
 SRCS_DIR = ./sources/
-SRCS =	fdf.c hooks.c parsing.c projections.c transformation.c window.c
+SRCS =	fdf.c hooks.c parsing.c projections.c top_view.c transformation.c window.c
 SRCS_PATH = $(addprefix $(SRCS_DIR), $(SRCS))
 OBJS_DIR = ./objects/
 OBJS = $(SRCS:%.c=%.o)

@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:35:33 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/18 18:36:10 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/24 16:47:15 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	identify_key(int key_code, t_fdf *fdf)
 		translate_y(key_code, fdf);						/*Translate up*/
 	else if (key_code == 126)
 		translate_y(key_code, fdf);						/*Translate down*/
-	rotation_keys(key_code, fdf);
+	else
+		rotation_keys(key_code, fdf);
 	return (0);
 }
 

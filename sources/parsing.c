@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 18:20:59 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/18 19:56:31 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/24 16:44:24 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,12 @@ void	extract_values(t_fdf *fdf)
 
 void	initialise_constants(t_fdf *fdf)
 {
+	double	alpha;
+	double	beta;
+	double	gamma;
+
 	fdf->map_height = 0;
+	fdf->colour = 0;
 	fdf->parsed_map = NULL;
 	fdf->single_line = NULL;
 	fdf->map_colors = NULL;
@@ -97,6 +102,15 @@ void	initialise_constants(t_fdf *fdf)
 	fdf->spacing = 30;
 	fdf->translate_x = 0;
 	fdf->translate_y = 0;
+	alpha = -235 * M_PI / 180;
+	beta = 0 * M_PI / 180;
+	gamma = -135 * M_PI / 180;
+	fdf->rot1 = cos(beta) * cos(gamma);
+	fdf->rot2 = sin(alpha) * sin(beta) * cos(gamma) - cos(alpha) * sin(gamma);
+	fdf->rot3 = cos(alpha) * sin(beta) * cos(alpha) + sin(alpha) * sin(gamma);
+	fdf->rot4 = cos(beta) * sin(gamma);
+	fdf->rot5 = sin(alpha) * sin(beta) * sin(gamma) + cos(alpha) * cos(gamma);
+	fdf->rot6 = cos(alpha) * sin(beta) * sin(gamma) - sin(alpha) * cos(gamma);
 }
 
 int	parse(t_fdf *fdf, char *map_path)
