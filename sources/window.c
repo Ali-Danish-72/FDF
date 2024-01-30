@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:40:42 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/30 21:23:22 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/30 21:34:45 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@ void	draw_pixel(t_fdf *fdf)
 	if (!(fdf->xy.final_x > -1 && fdf->xy.final_x < fdf->map.size_x && 
 		fdf->xy.final_y > -1 && fdf->xy.final_y < fdf->map.size_y))
 		return ;
-	// printf("<%f>\n", fdf->xy.final_y * fdf->mlx.size_line + (fdf->xy.final_x * (fdf->mlx.bits_per_pixel / 8)));
-	// printf("|%d|\n", (int)(fdf->xy.final_y * fdf->mlx.size_line + (fdf->xy.final_x * (fdf->mlx.bits_per_pixel / 8))));
-	dst = (fdf->mlx.image_address + (int)fdf->xy.final_y * fdf->mlx.size_line + 
-			(int)(fdf->xy.final_x * (fdf->mlx.bits_per_pixel / 8)));
+	dst = fdf->mlx.image_address + (int)fdf->xy.final_y * fdf->mlx.size_line + 
+			(int)fdf->xy.final_x * (fdf->mlx.bits_per_pixel / 8);
 	*(unsigned int *)dst = fdf->xy.pixel_colour;
 }
 
