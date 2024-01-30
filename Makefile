@@ -3,7 +3,7 @@
 ###############################################################################
 NAME = fdf
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra
 RESET=\033[0m
 RED=\033[1;31m
 GREEN=\033[1;32m
@@ -15,11 +15,15 @@ MLX_DIR = ./minilibx/
 MLX = $(MLX_DIR)libmlx.a
 HEADERS = ./
 SRCS_DIR = ./sources/
-SRCS =	fdf.c hooks.c parsing.c projections.c top_view.c transformation.c window.c
+SRCS =	fdf.c hooks.c parsing.c projections.c window.c
 SRCS_PATH = $(addprefix $(SRCS_DIR), $(SRCS))
 OBJS_DIR = ./objects/
 OBJS = $(SRCS:%.c=%.o)
 OBJS_PATH = $(addprefix $(OBJS_DIR), $(OBJS))
+
+###############################################################################
+#                                     RULES                                   #
+###############################################################################
 
 all: $(NAME)
 

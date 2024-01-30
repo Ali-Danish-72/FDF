@@ -6,92 +6,113 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:41:54 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/24 16:58:45 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/30 20:50:36 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
 
-//		Send x and y as *i - 1 and *(i + 1) - 1 respectively.
-//		theta -> -135, beta -> 0, alpha -> -235
-int	cal_iso_rot(_Bool is_x, int x, int y, t_fdf *fdf)
+float	rotate(int is_x, int x, int y, t_fdf *fdf)
 {
+	float	result;
+	int		z;
+
+	z = *(*(fdf->map.map_numbers + y) + x) * fdf->consts.spacing;
+	y *= fdf->consts.spacing;
+	x *= fdf->consts.spacing;
 	if (is_x)
-		return (round((fdf->rot1 * (x * fdf->spacing)) + (fdf->rot2) * 
-		(y * fdf->spacing) + (fdf->rot3) * *(*(fdf->map_numbers + y) + x)));
-	return (round((fdf->rot4) * (x * fdf->spacing) + (fdf->rot5) * 
-		(y * fdf->spacing) + (fdf->rot6) * *(*(fdf->map_numbers + y) + x)));
+		result = fdf->xy.x_const_x * x + fdf->xy.x_const_y * y + 
+			fdf->xy.x_const_z * z + fdf->consts.x_offset;
+	else
+		result = fdf->xy.y_const_x * x + fdf->xy.y_const_y * y + 
+			fdf->xy.y_const_z * z + fdf->consts.y_offset;
+	return (result);
 }
 
-void	check_last_point_for_isometric_view(int *x, int *y, int *coords, t_fdf *fdf)
+unsigned int	identify_colour(int is_x, int *xy, t_fdf *fdf)
 {
-	*x = cal_iso_rot(1, *coords - 1, *(coords + 1) - 1, fdf) + fdf->x_offset;
-	*y = cal_iso_rot(0, *coords - 1, *(coords + 1) - 1, fdf) + fdf->y_offset;
-	if (*(coords + 1) != fdf->map_height)
+	if (*(*(fdf->map.map_colors + *(xy + 1) - 1) + *xy - 1))
+		return (*(*(fdf->map.map_colors + *(xy + 1) - 1) + *xy - 1));
+	if (is_x && *(*(fdf->map.map_colors + *(xy + 1) - 1) + *xy))
+		return (*(*(fdf->map.map_colors + *(xy + 1) - 1) + *xy));
+	if (!is_x && *(*(fdf->map.map_colors + *(xy + 1)) + *xy - 1))
+		return (*(*(fdf->map.map_colors + *(xy + 1)) + *xy - 1));
+	if (*(*(fdf->map.map_numbers + *(xy + 1) - 1) + *xy - 1))
+		return (*(fdf->xy.colours + fdf->xy.z_colour_index));
+	if (is_x && *(*(fdf->map.map_numbers + *(xy + 1) - 1) + *xy))
+		return (*(fdf->xy.colours + fdf->xy.z_colour_index));
+	if (!is_x && *(*(fdf->map.map_numbers + *(xy + 1)) + *xy - 1))
+		return (*(fdf->xy.colours + fdf->xy.z_colour_index));
+	return (*(fdf->xy.colours + fdf->xy.no_z_colour_index));
+}
+
+void	draw_line(int *xy, t_fdf *fdf)
+{
+	fdf->xy.x_1 = rotate(1, *xy - 1, *(xy + 1) - 1, fdf);
+	fdf->xy.y_1 = rotate(0, *xy - 1, *(xy + 1) - 1, fdf);
+	if (*(xy + 1) != fdf->map.map_height)
 	{
-		if (*(*(fdf->map_colors + *(coords + 1) - 1) + *coords - 1))
-			fdf->colour = *(*(fdf->map_colors + *(coords + 1) - 1) + *coords - 1);
-		else if (*(*(fdf->map_colors + *(coords + 1)) + *coords - 1))
-			fdf->colour = *(*(fdf->map_colors + *(coords + 1)) + *coords - 1);
-		*(x + 1) = cal_iso_rot(1, *coords - 1, *(coords + 1), fdf) + fdf->x_offset;
-		*(y + 1) = cal_iso_rot(0, *coords - 1, *(coords + 1), fdf) + fdf->y_offset;
-		dda(x, y, fdf);
+		fdf->xy.pixel_colour = identify_colour(0, xy, fdf);
+		fdf->xy.x_2 = rotate(1, *xy - 1, *(xy + 1), fdf);
+		fdf->xy.y_2 = rotate(0, *xy - 1, *(xy + 1), fdf);
+		dda(fdf);
 	}
-	if (*coords != fdf->map_width)
+	if (*xy != fdf->map.map_width)
 	{
-		if (*(*(fdf->map_colors + *(coords + 1) - 1) + *coords - 1))
-			fdf->colour = *(*(fdf->map_colors + *(coords + 1) - 1) + *coords - 1);
-		else if (*(*(fdf->map_colors + *(coords + 1) - 1) + *coords))
-			fdf->colour = *(*(fdf->map_colors + *(coords + 1) - 1) + *coords);
-		*(x + 1) = cal_iso_rot(1, *coords, *(coords + 1) - 1, fdf) + fdf->x_offset;
-		*(y + 1) = cal_iso_rot(0, *coords, *(coords + 1) - 1, fdf) + fdf->y_offset;
-		dda(x, y, fdf);
+		fdf->xy.pixel_colour = identify_colour(1, xy, fdf);
+		fdf->xy.x_2 = rotate(1, *xy, *(xy + 1) - 1, fdf);
+		fdf->xy.y_2 = rotate(0, *xy, *(xy + 1) - 1, fdf);
+		dda(fdf);
 	}
 }
 
-void	isometric_view(t_fdf *fdf)
+void	build_image(t_fdf *fdf)
 {
-	int		x[2];
-	int		y[2];
-	int		coords[2];
+	int		xy[2];
 
-	fdf->mlx.image = mlx_new_image(fdf->mlx.mlx, fdf->size_x, fdf->size_y);
+	fdf->mlx.image = mlx_new_image(fdf->mlx.mlx, fdf->map.size_x, 
+			fdf->map.size_y);
 	fdf->mlx.image_address = mlx_get_data_addr(fdf->mlx.image,
-			&fdf->mlx.pixel_bit, &fdf->mlx.size_line, &fdf->mlx.endian);
-	fdf->projs = ISO;
-	calculate_offset(fdf);
-	*coords = 0;
-	while (++*coords <= fdf->map_width)
+			&fdf->mlx.bits_per_pixel, &fdf->mlx.size_line, &fdf->mlx.endian);
+	*xy = 0;
+	while (++*xy <= fdf->map.map_width)
 	{
-		*(coords + 1) = 0;
-		while (++*(coords + 1) <= fdf->map_height)
-			check_last_point_for_isometric_view(x, y, coords, fdf);
+		*(xy + 1) = 0;
+		while (++*(xy + 1) <= fdf->map.map_height)
+			draw_line(xy, fdf);
 	}
+	// fdf->xy.x_1 = 100;
+	// fdf->xy.y_1 = 200;
+	// fdf->xy.x_2 = 800;
+	// fdf->xy.y_2 = 200;
+	// fdf->xy.pixel_colour = *(fdf->xy.colours + fdf->xy.no_z_colour_index);
+	// dda(fdf);
 	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.window,
 		fdf->mlx.image, 0, 0);
 	mlx_destroy_image(fdf->mlx.mlx, fdf->mlx.image);
 }
 
-void	front_view(t_fdf *fdf)
+void	execute_projection(t_fdf *fdf, int projection_code)
 {
-	fdf->mlx.image = mlx_new_image(fdf->mlx.mlx, fdf->size_x, fdf->size_y);
-	fdf->mlx.image_address = mlx_get_data_addr(fdf->mlx.image,
-			&fdf->mlx.pixel_bit, &fdf->mlx.size_line, &fdf->mlx.endian);
-	fdf->projs = FR;
-	calculate_offset(fdf);
-	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.window,
-		fdf->mlx.image, 0, 0);
-	mlx_destroy_image(fdf->mlx.mlx, fdf->mlx.image);
-}
-
-void	side_view(t_fdf *fdf)
-{
-	fdf->mlx.image = mlx_new_image(fdf->mlx.mlx, fdf->size_x, fdf->size_y);
-	fdf->mlx.image_address = mlx_get_data_addr(fdf->mlx.image,
-			&fdf->mlx.pixel_bit, &fdf->mlx.size_line, &fdf->mlx.endian);
-	fdf->projs = SD;
-	calculate_offset(fdf);
-	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.window,
-		fdf->mlx.image, 0, 0);
-	mlx_destroy_image(fdf->mlx.mlx, fdf->mlx.image);
+	if (projection_code == 18)
+	{
+		fdf->projection = ISOMETRIC_VIEW;
+		calculate_constants(235, 0, -135, fdf);
+	}
+	else if (projection_code == 19)
+	{
+		fdf->projection = FRONT_VIEW;
+		calculate_constants(90, 0, 0, fdf);
+	}
+	else if (projection_code == 20)
+	{
+		fdf->projection = SIDE_VIEW;
+		calculate_constants(0, 90, 0, fdf);
+	}
+	else if (projection_code == 21)
+	{
+		fdf->projection = TOP_VIEW;
+		calculate_constants(0, 0, 0, fdf);
+	}
+	build_image(fdf);
 }

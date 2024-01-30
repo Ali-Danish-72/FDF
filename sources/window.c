@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:40:42 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/24 16:59:45 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/30 21:23:22 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,61 +14,71 @@
 
 void	draw_pixel(t_fdf *fdf)
 {
-	unsigned int	*dst;
+	char	*dst;
 
-	dst = (unsigned int *)(fdf->mlx.image_address + fdf->final_y * 
-			fdf->mlx.size_line + fdf->final_x * (fdf->mlx.pixel_bit / 8));
-	if (fdf->colour)
-		*dst = fdf->colour;
-	else
-		*dst = 0xFFFFFF;
+	if (!(fdf->xy.final_x > -1 && fdf->xy.final_x < fdf->map.size_x && 
+		fdf->xy.final_y > -1 && fdf->xy.final_y < fdf->map.size_y))
+		return ;
+	// printf("<%f>\n", fdf->xy.final_y * fdf->mlx.size_line + (fdf->xy.final_x * (fdf->mlx.bits_per_pixel / 8)));
+	// printf("|%d|\n", (int)(fdf->xy.final_y * fdf->mlx.size_line + (fdf->xy.final_x * (fdf->mlx.bits_per_pixel / 8))));
+	dst = (fdf->mlx.image_address + (int)fdf->xy.final_y * fdf->mlx.size_line + 
+			(int)(fdf->xy.final_x * (fdf->mlx.bits_per_pixel / 8)));
+	*(unsigned int *)dst = fdf->xy.pixel_colour;
 }
 
-void	dda(int *x, int *y, t_fdf *fdf)
+void	dda(t_fdf *fdf)
 {
 	float	dx;
 	float	dy;
 	int		increments;
 
-	dx = *(x + 1) - *x;
-	dy = *(y + 1) - *y;
-	if (dx > dy)
+	dx = fdf->xy.x_2 - fdf->xy.x_1;
+	dy = fdf->xy.y_2 - fdf->xy.y_1;
+	if (fabs(dx) > fabs(dy))
 		increments = fabs(dx);
 	else
 		increments = fabs(dy);
-	if (increments)
-		dx = round(dx / increments);
-	if (increments)
-		dy = round(dy / increments);
-	fdf->final_x = *x;
-	fdf->final_y = *y;
+	dx = (dx / increments);
+	dy = (dy / increments);
+	fdf->xy.final_x = fdf->xy.x_1;
+	fdf->xy.final_y = fdf->xy.y_1;
 	while (increments--)
 	{
-		if (fdf->final_x > -1 && fdf->final_x < fdf->size_x && 
-			fdf->final_y > -1 && fdf->final_y < fdf->size_y)
-			draw_pixel(fdf);
-		fdf->final_x += dx;
-		fdf->final_y += dy;
+		draw_pixel(fdf);
+		fdf->xy.final_x += dx;
+		fdf->xy.final_y += dy;
 	}
-	fdf->colour = 0;
 }
 
-void	calculate_offset(t_fdf *fdf)
+void	calculate_constants(float alpha, float beta, float gamma, t_fdf *fdf)
 {
-	fdf->x_offset = (fdf->size_x / 2) - (fdf->map_width * fdf->spacing / 2)
-		+ fdf->translate_x;
-	fdf->y_offset = (fdf->size_y / 2) - (fdf->map_height * fdf->spacing / 2)
-		+ fdf->translate_y;
+	alpha = (alpha + fdf->consts.rotation_x) * M_PI / 180;
+	beta = (beta + fdf->consts.rotation_y) * M_PI / 180;
+	gamma = (gamma + fdf->consts.rotation_z) * M_PI / 180;
+	fdf->xy.x_const_x = cos(beta) * cos(gamma);
+	fdf->xy.x_const_y = sin(alpha) * sin(beta) * cos(gamma) - 
+		cos(alpha) * sin(gamma);
+	fdf->xy.x_const_z = cos(alpha) * sin(beta) * cos(alpha) + 
+		sin(alpha) * sin(gamma);
+	fdf->xy.y_const_x = cos(beta) * sin(gamma);
+	fdf->xy.y_const_y = sin(alpha) * sin(beta) * sin(gamma) + 
+		cos(alpha) * cos(gamma);
+	fdf->xy.y_const_z = cos(alpha) * sin(beta) * sin(gamma) - 
+		sin(alpha) * cos(gamma);
+	fdf->consts.x_offset = (fdf->map.size_x / 2) + fdf->consts.translate_x - 
+		(fdf->map.map_width * fdf->consts.spacing / 2);
+	fdf->consts.y_offset = (fdf->map.size_y / 2) + fdf->consts.translate_y - 
+		(fdf->map.map_height * fdf->consts.spacing / 2);
 }
 
 void	initialise_window(t_fdf fdf)
 {
 	fdf.mlx.mlx = mlx_init();
-	fdf.mlx.window = mlx_new_window(fdf.mlx.mlx, fdf.size_x, fdf.size_y,
-			"mdanish's FDF projection");
+	fdf.mlx.window = mlx_new_window(fdf.mlx.mlx, fdf.map.size_x, fdf.map.size_y,
+			"FDF projection - Property of mdanish");
 	mlx_mouse_hook(fdf.mlx.window, identify_mouse, &fdf);
 	mlx_hook(fdf.mlx.window, 2, 0, identify_key, &fdf);
 	mlx_hook(fdf.mlx.window, 17, 0, destroy_window, &fdf);
-	isometric_view(&fdf);
+	execute_projection(&fdf, 18);
 	mlx_loop(fdf.mlx.mlx);
 }
