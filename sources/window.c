@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:40:42 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/30 21:34:45 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/31 17:01:07 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	draw_pixel(t_fdf *fdf)
 	char	*dst;
 
 	if (!(fdf->xy.final_x > -1 && fdf->xy.final_x < fdf->map.size_x && 
-		fdf->xy.final_y > -1 && fdf->xy.final_y < fdf->map.size_y))
+			fdf->xy.final_y > -1 && fdf->xy.final_y < fdf->map.size_y))
 		return ;
 	dst = fdf->mlx.image_address + (int)fdf->xy.final_y * fdf->mlx.size_line + 
-			(int)fdf->xy.final_x * (fdf->mlx.bits_per_pixel / 8);
+		(int)fdf->xy.final_x * (fdf->mlx.bits_per_pixel / 8);
 	*(unsigned int *)dst = fdf->xy.pixel_colour;
 }
 
@@ -50,6 +50,9 @@ void	dda(t_fdf *fdf)
 
 void	calculate_constants(float alpha, float beta, float gamma, t_fdf *fdf)
 {
+	float	middle_point_x;
+	float	middle_point_y;
+
 	alpha = (alpha + fdf->consts.rotation_x) * M_PI / 180;
 	beta = (beta + fdf->consts.rotation_y) * M_PI / 180;
 	gamma = (gamma + fdf->consts.rotation_z) * M_PI / 180;
@@ -63,10 +66,14 @@ void	calculate_constants(float alpha, float beta, float gamma, t_fdf *fdf)
 		cos(alpha) * cos(gamma);
 	fdf->xy.y_const_z = cos(alpha) * sin(beta) * sin(gamma) - 
 		sin(alpha) * cos(gamma);
-	fdf->consts.x_offset = (fdf->map.size_x / 2) + fdf->consts.translate_x - 
-		(fdf->map.map_width * fdf->consts.spacing / 2);
-	fdf->consts.y_offset = (fdf->map.size_y / 2) + fdf->consts.translate_y - 
-		(fdf->map.map_height * fdf->consts.spacing / 2);
+	middle_point_x = fdf->xy.x_const_x * (fdf->map.map_width / 2.0) + 
+		fdf->xy.x_const_y * (fdf->map.map_height / 2.0);
+	middle_point_y = fdf->xy.y_const_x * (fdf->map.map_width / 2.0) + 
+		fdf->xy.y_const_y * (fdf->map.map_height / 2.0);
+	fdf->consts.x_offset = 800 - middle_point_x * fdf->consts.spacing + 
+		fdf->consts.translate_x;
+	fdf->consts.y_offset = 600 - middle_point_y * fdf->consts.spacing + 
+		fdf->consts.translate_y;
 }
 
 void	initialise_window(t_fdf fdf)

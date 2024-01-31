@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:41:54 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/30 20:50:36 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/31 16:56:59 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,6 @@ void	build_image(t_fdf *fdf)
 		while (++*(xy + 1) <= fdf->map.map_height)
 			draw_line(xy, fdf);
 	}
-	// fdf->xy.x_1 = 100;
-	// fdf->xy.y_1 = 200;
-	// fdf->xy.x_2 = 800;
-	// fdf->xy.y_2 = 200;
-	// fdf->xy.pixel_colour = *(fdf->xy.colours + fdf->xy.no_z_colour_index);
-	// dda(fdf);
 	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.window,
 		fdf->mlx.image, 0, 0);
 	mlx_destroy_image(fdf->mlx.mlx, fdf->mlx.image);

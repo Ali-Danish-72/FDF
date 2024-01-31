@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 18:20:59 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/30 21:21:42 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/01/31 17:00:53 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	initialise_constants(t_fdf *fdf)
 	fdf->consts.rotation_x = 0;
 	fdf->consts.rotation_y = 0;
 	fdf->consts.rotation_z = 0;
+	fdf->consts.help_flag = 0;
 	fdf->xy.z_colour_index = 4;
 	fdf->xy.no_z_colour_index = 0;
 	*(fdf->xy.colours + 0) = 0xFFFFFF;
@@ -117,7 +118,6 @@ void	initialise_constants(t_fdf *fdf)
 
 void	parse(t_fdf *fdf, char *map_path)
 {
-	
 	fdf->map.map_fd = open(map_path, O_RDONLY);
 	if (fdf->map.map_fd < 0)
 		call_exit(3, fdf);
