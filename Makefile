@@ -29,7 +29,8 @@ all: $(NAME)
 
 $(NAME): $(OBJS_DIR) $(OBJS_PATH)
 	@make -s -C $(MLX_DIR)
-	@make -s -C $(LIBFT_DIR) converters gnl printf memory strings
+	@echo "$(BLUE)OBJECTS $(GREEN)CREATED$(RESET)"
+	@make -s -C $(LIBFT_DIR)
 	@$(CC) $(CFLAGS) -framework OpenGL -framework AppKit $(OBJS_PATH) $(LIBFT) $(MLX) -o $(NAME)
 	@echo "$(BLUE)PROGRAM $(GREEN)CREATED: $(CYAN)fdf$(RESET)"
 

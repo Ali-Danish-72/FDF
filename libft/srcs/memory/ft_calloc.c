@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/05 08:28:07 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/12 18:36:42 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/02/01 21:03:18 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ void	*ft_calloc(size_t count, size_t size)
 	pointer = (void *)malloc(count * size);
 	if (!pointer)
 		return (NULL);
-	ft_bzero(pointer, (count * size));
+	ft_memset(pointer, 0, (count * size));
 	return (pointer);
 }

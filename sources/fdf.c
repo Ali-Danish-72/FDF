@@ -6,11 +6,20 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:25:50 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/30 21:07:39 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/02/01 21:30:49 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../fdf.h"
+
+void	free_data(t_fdf *fdf)
+{
+	free_split((void **)fdf->map.parsed_map, fdf->map.map_height);
+	free_split((void **)fdf->map.map_colors, fdf->map.map_height);
+	free_split((void **)fdf->map.map_numbers, fdf->map.map_height);
+	free(fdf->map.single_line);
+	close(fdf->map.map_fd);
+}
 
 void	call_exit(int status, t_fdf *fdf)
 {
@@ -31,13 +40,9 @@ void	call_exit(int status, t_fdf *fdf)
 	else if (status == 8)
 		ft_printf(2, "Malloc while creating the color map failed.");
 	if (status > 3)
-	{
-		free_split((void **)fdf->map.parsed_map, fdf->map.map_height);
-		free_split((void **)fdf->map.map_colors, fdf->map.map_height);
-		free_split((void **)fdf->map.map_numbers, fdf->map.map_height);
-		free(fdf->map.single_line);
-		close(fdf->map.map_fd);
-	}
+		free_data(fdf);
+	if (status == 9)
+		exit (0);
 	exit(status);
 }
 
@@ -45,7 +50,7 @@ int	destroy_window(t_fdf *fdf)
 {
 	mlx_clear_window(fdf->mlx.mlx, fdf->mlx.window);
 	mlx_destroy_window(fdf->mlx.mlx, fdf->mlx.window);
-	call_exit(0, fdf);
+	call_exit(9, fdf);
 	return (0);
 }
 
@@ -59,4 +64,5 @@ int	main(int argc, char **argv)
 		call_exit(2, NULL);
 	parse(&fdf, *(argv + 1));
 	initialise_window(fdf);
+	call_exit(9, &fdf);
 }

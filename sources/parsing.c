@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 18:20:59 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/31 17:00:53 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/02/01 20:56:24 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,11 @@ void	extract_heights_and_colours(t_fdf *fdf, int index, char **values)
 	char	*value;
 	int		width;
 
-	*(fdf->map.map_numbers + index) = ft_calloc(fdf->map.map_width, 
+	*(fdf->map.map_numbers + index) = ft_calloc(fdf->map.map_width,
 			sizeof(int));
 	if (!fdf->map.map_numbers)
 		call_exit(7, fdf);
-	*(fdf->map.map_colors + index) = ft_calloc(fdf->map.map_width, 
+	*(fdf->map.map_colors + index) = ft_calloc(fdf->map.map_width,
 			sizeof(unsigned));
 	if (!fdf->map.map_colors)
 		call_exit(8, fdf);
@@ -103,17 +103,16 @@ void	initialise_constants(t_fdf *fdf)
 	fdf->consts.rotation_y = 0;
 	fdf->consts.rotation_z = 0;
 	fdf->consts.help_flag = 0;
-	fdf->xy.z_colour_index = 4;
+	fdf->consts.prank_flag = 0;
+	fdf->xy.z_colour_index = 3;
 	fdf->xy.no_z_colour_index = 0;
 	*(fdf->xy.colours + 0) = 0xFFFFFF;
 	*(fdf->xy.colours + 1) = 0xFEFE33;
 	*(fdf->xy.colours + 2) = 0xFF8C00;
-	*(fdf->xy.colours + 3) = 0x68217A;
-	*(fdf->xy.colours + 4) = 0xE81123;
-	*(fdf->xy.colours + 5) = 0xEC008C;
-	*(fdf->xy.colours + 6) = 0x00BCF2;
-	*(fdf->xy.colours + 7) = 0x00B294;
-	*(fdf->xy.colours + 8) = 0x009E49;
+	*(fdf->xy.colours + 3) = 0xE81123;
+	*(fdf->xy.colours + 4) = 0x68217A;
+	*(fdf->xy.colours + 5) = 0x00BCF2;
+	*(fdf->xy.colours + 6) = 0x009E49;
 }
 
 void	parse(t_fdf *fdf, char *map_path)
@@ -127,7 +126,7 @@ void	parse(t_fdf *fdf, char *map_path)
 		call_exit(4, fdf);
 	while (fdf->map.map_line)
 	{
-		fdf->map.single_line = ft_strjoin_free(fdf->map.single_line, 
+		fdf->map.single_line = ft_strjoin_free(fdf->map.single_line,
 				fdf->map.map_line, 3);
 		if (!fdf->map.single_line)
 			call_exit(5, fdf);

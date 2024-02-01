@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:41:54 by mdanish           #+#    #+#             */
-/*   Updated: 2024/01/31 16:56:59 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/02/01 19:49:15 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ float	rotate(int is_x, int x, int y, t_fdf *fdf)
 	y *= fdf->consts.spacing;
 	x *= fdf->consts.spacing;
 	if (is_x)
-		result = fdf->xy.x_const_x * x + fdf->xy.x_const_y * y + 
+		result = fdf->xy.x_const_x * x + fdf->xy.x_const_y * y + \
 			fdf->xy.x_const_z * z + fdf->consts.x_offset;
 	else
-		result = fdf->xy.y_const_x * x + fdf->xy.y_const_y * y + 
+		result = fdf->xy.y_const_x * x + fdf->xy.y_const_y * y + \
 			fdf->xy.y_const_z * z + fdf->consts.y_offset;
 	return (result);
 }
@@ -70,7 +70,7 @@ void	build_image(t_fdf *fdf)
 {
 	int		xy[2];
 
-	fdf->mlx.image = mlx_new_image(fdf->mlx.mlx, fdf->map.size_x, 
+	fdf->mlx.image = mlx_new_image(fdf->mlx.mlx, fdf->map.size_x,
 			fdf->map.size_y);
 	fdf->mlx.image_address = mlx_get_data_addr(fdf->mlx.image,
 			&fdf->mlx.bits_per_pixel, &fdf->mlx.size_line, &fdf->mlx.endian);
@@ -84,6 +84,14 @@ void	build_image(t_fdf *fdf)
 	mlx_put_image_to_window(fdf->mlx.mlx, fdf->mlx.window,
 		fdf->mlx.image, 0, 0);
 	mlx_destroy_image(fdf->mlx.mlx, fdf->mlx.image);
+	if (fdf->consts.help_flag % 2)
+		print_menu(fdf);
+	else if (fdf->consts.prank_flag % 2)
+		mlx_string_put(fdf->mlx.mlx, fdf->mlx.window, 10, 50, 0xFFFFFF,
+			"the Help Menu.\n");
+	else
+		mlx_string_put(fdf->mlx.mlx, fdf->mlx.window, 10, 50, 0xFFFFFF,
+			"Press [ H ] to display the Help Menu.\n");
 }
 
 void	execute_projection(t_fdf *fdf, int projection_code)
