@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:14:14 by mdanish           #+#    #+#             */
-/*   Updated: 2024/02/01 21:30:30 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/08/29 21:59:25 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,59 @@
 # define FDF_H
 
 # include "libft/libft.h"
-# include "minilibx/mlx.h"
+# include "minilibx-linux/mlx.h"
 # include <math.h>
+
+# if __APPLE__
+#  include "minilibx-mac/mlx.h"
+#  define ESC 53
+#  define Q 12
+#  define W 13
+#  define A 0
+#  define S 1
+#  define Z 6
+#  define X 7
+#  define O 31
+#  define I 34
+#  define L 37
+#  define K 40
+#  define H 4
+#  define M 46
+#  define LEFT 123
+#  define RIGHT 124
+#  define UP 126
+#  define DOWN 125
+#  define PLUS 24
+#  define MINUS 27
+#  define PROJECTION1 18
+#  define PROJECTION2 19
+#  define PROJECTION3 20
+#  define PROJECTION4 21
+# elif __linux__
+#  define ESC 65307
+#  define Q 113
+#  define W 119
+#  define A 97
+#  define S 115
+#  define Z 122
+#  define X 120
+#  define O 111
+#  define I 105
+#  define L 108
+#  define K 107
+#  define H 104
+#  define M 109
+#  define LEFT 65361
+#  define RIGHT 65363
+#  define UP 65362
+#  define DOWN 65364
+#  define PLUS 61
+#  define MINUS 45
+#  define PROJECTION1 49
+#  define PROJECTION2 50
+#  define PROJECTION3 51
+#  define PROJECTION4 52
+# endif
 
 /*		An enum to identify the projection currently in display.			*/
 typedef enum e_projection
@@ -131,7 +182,7 @@ void			call_exit(int status, t_fdf *fdf);
 int				destroy_window(t_fdf *fdf);
 void			free_data(t_fdf *fdf);
 
-//	Exit `odes:
+//	Exit codes:
 //	0 = Successful completion of the program.
 //	1 = Incorrect number of arguments.
 //	2 = Incorrect extension of file detected.

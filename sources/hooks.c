@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:35:33 by mdanish           #+#    #+#             */
-/*   Updated: 2024/02/01 20:49:35 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/08/29 22:12:43 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,62 +14,62 @@
 
 int	switch_projection(int key_code, t_fdf *fdf)
 {
-	if (key_code > 17 && key_code < 22)
+	if (key_code >= PROJECTION1 && key_code <= PROJECTION4)
 		execute_projection(fdf, key_code);
 	else if (!fdf->projection)
-		execute_projection(fdf, 18);
+		execute_projection(fdf, PROJECTION1);
 	else if (fdf->projection == 1)
-		execute_projection(fdf, 19);
+		execute_projection(fdf, PROJECTION2);
 	else if (fdf->projection == 2)
-		execute_projection(fdf, 20);
+		execute_projection(fdf, PROJECTION3);
 	else if (fdf->projection == 3)
-		execute_projection(fdf, 21);
+		execute_projection(fdf, PROJECTION4);
 	return (0);
 }
 
 void	transformations(int key_code, t_fdf *fdf)
 {
-	if (key_code == 24)
+	if (key_code == PLUS)
 		fdf->consts.spacing += 1;
-	else if (key_code == 27)
+	else if (key_code == MINUS)
 		fdf->consts.spacing -= 1;
-	else if (key_code == 123)
+	else if (key_code == LEFT)
 		fdf->consts.translate_x -= 10;
-	else if (key_code == 124)
+	else if (key_code == RIGHT)
 		fdf->consts.translate_x += 10;
-	else if (key_code == 125)
+	else if (key_code == DOWN)
 		fdf->consts.translate_y += 10;
-	else if (key_code == 126)
+	else if (key_code == UP)
 		fdf->consts.translate_y -= 10;
-	else if (key_code == 13)
+	else if (key_code == W)
 		fdf->consts.rotation_x += 5;
-	else if (key_code == 12)
+	else if (key_code == Q)
 		fdf->consts.rotation_x -= 5;
-	else if (key_code == 1)
+	else if (key_code == S)
 		fdf->consts.rotation_y += 5;
-	else if (key_code == 0)
+	else if (key_code == A)
 		fdf->consts.rotation_y -= 5;
-	else if (key_code == 7)
+	else if (key_code == X)
 		fdf->consts.rotation_z += 5;
-	else if (key_code == 6)
+	else if (key_code == Z)
 		fdf->consts.rotation_z -= 5;
 }
 
 int	identify_key(int key_code, t_fdf *fdf)
 {
-	if (key_code == 53)
+	if (key_code == ESC)
 		destroy_window(fdf);
-	else if (key_code == 31)
+	else if (key_code == O)
 		fdf->xy.z_colour_index++;
-	else if (key_code == 34)
+	else if (key_code == I)
 		fdf->xy.z_colour_index--;
-	else if (key_code == 37)
+	else if (key_code == L)
 		fdf->xy.no_z_colour_index++;
-	else if (key_code == 40)
+	else if (key_code == K)
 		fdf->xy.no_z_colour_index--;
-	else if (key_code == 4)
+	else if (key_code == H)
 		fdf->consts.prank_flag += 1;
-	else if (key_code == 46)
+	else if (key_code == M)
 		fdf->consts.help_flag += 1;
 	else
 		transformations(key_code, fdf);

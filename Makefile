@@ -3,7 +3,7 @@
 ###############################################################################
 NAME = fdf
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g3 -I .
 RESET=\033[0m
 RED=\033[1;31m
 GREEN=\033[1;32m
@@ -11,7 +11,14 @@ BLUE=\033[1;34m
 CYAN=\033[1;36m
 LIBFT_DIR = ./libft/
 LIBFT = $(LIBFT_DIR)libft.a
-MLX_DIR = ./minilibx/
+ifeq ($(shell uname -s), Darwin)
+MLX_DIR = ./minilibx-mac/
+MLX_FLAGS = -framework OpenGL -framework AppKit
+endif
+ifeq ($(shell uname -s), Linux)
+MLX_DIR = ./minilibx-linux/
+MLX_FLAGS = -Lmlx -lX11 -lXext
+endif
 MLX = $(MLX_DIR)libmlx.a
 HEADERS = ./
 SRCS_DIR = ./sources/
@@ -27,12 +34,16 @@ OBJS_PATH = $(addprefix $(OBJS_DIR), $(OBJS))
 
 all: $(NAME)
 
-$(NAME): $(OBJS_DIR) $(OBJS_PATH)
-	@make -s -C $(MLX_DIR)
+$(NAME): $(OBJS_DIR) $(OBJS_PATH) $(MLX) $(LIBFT)
+	$(CC) $(CFLAGS) $(MLX_FLAGS) $(MLX) $(LIBFT) $(OBJS_PATH) -o $(NAME)
 	@echo "$(BLUE)OBJECTS $(GREEN)CREATED$(RESET)"
-	@make -s -C $(LIBFT_DIR)
-	@$(CC) $(CFLAGS) -framework OpenGL -framework AppKit $(OBJS_PATH) $(LIBFT) $(MLX) -o $(NAME)
 	@echo "$(BLUE)PROGRAM $(GREEN)CREATED: $(CYAN)fdf$(RESET)"
+
+$(MLX):
+	@make -s -C $(MLX_DIR)
+
+$(LIBFT):
+	@make -s -C $(LIBFT_DIR)
 
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)

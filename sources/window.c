@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:40:42 by mdanish           #+#    #+#             */
-/*   Updated: 2024/02/01 20:45:59 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/08/29 22:12:34 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	initialise_window(t_fdf fdf)
 	fdf.mlx.window = mlx_new_window(fdf.mlx.mlx, fdf.map.size_x, fdf.map.size_y,
 			"FDF projection - Property of mdanish");
 	mlx_mouse_hook(fdf.mlx.window, identify_mouse, &fdf);
-	mlx_hook(fdf.mlx.window, 2, 0, identify_key, &fdf);
+	mlx_hook(fdf.mlx.window, 2, 1, identify_key, &fdf);
 	mlx_hook(fdf.mlx.window, 17, 0, destroy_window, &fdf);
 	execute_projection(&fdf, 18);
 	mlx_loop(fdf.mlx.mlx);
