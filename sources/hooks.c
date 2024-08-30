@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:35:33 by mdanish           #+#    #+#             */
-/*   Updated: 2024/08/29 22:12:43 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/08/30 15:01:04 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,47 +29,47 @@ int	switch_projection(int key_code, t_fdf *fdf)
 
 void	transformations(int key_code, t_fdf *fdf)
 {
-	if (key_code == PLUS)
+	if (key_code == ZOOM_IN)
 		fdf->consts.spacing += 1;
-	else if (key_code == MINUS)
+	else if (key_code == ZOOM_OUT)
 		fdf->consts.spacing -= 1;
-	else if (key_code == LEFT)
+	else if (key_code == TRANSLATE_LEFT)
 		fdf->consts.translate_x -= 10;
-	else if (key_code == RIGHT)
+	else if (key_code == TRANSLATE_RIGHT)
 		fdf->consts.translate_x += 10;
-	else if (key_code == DOWN)
+	else if (key_code == TRANSLATE_DOWN)
 		fdf->consts.translate_y += 10;
-	else if (key_code == UP)
+	else if (key_code == TRANSLATE_UP)
 		fdf->consts.translate_y -= 10;
-	else if (key_code == W)
+	else if (key_code == X_POSITIVE_ROTATE)
 		fdf->consts.rotation_x += 5;
-	else if (key_code == Q)
+	else if (key_code == X_NEGATIVE_ROTATE)
 		fdf->consts.rotation_x -= 5;
-	else if (key_code == S)
+	else if (key_code == Y_POSITIVE_ROTATE)
 		fdf->consts.rotation_y += 5;
-	else if (key_code == A)
+	else if (key_code == Y_NEGATIVE_ROTATE)
 		fdf->consts.rotation_y -= 5;
-	else if (key_code == X)
+	else if (key_code == Z_POSITIVE_ROTATE)
 		fdf->consts.rotation_z += 5;
-	else if (key_code == Z)
+	else if (key_code == Z_NEGATIVE_ROTATE)
 		fdf->consts.rotation_z -= 5;
 }
 
 int	identify_key(int key_code, t_fdf *fdf)
 {
-	if (key_code == ESC)
+	if (key_code == ESCAPE)
 		destroy_window(fdf);
-	else if (key_code == O)
+	else if (key_code == Z_COLOUR_FORWARD)
 		fdf->xy.z_colour_index++;
-	else if (key_code == I)
+	else if (key_code == Z_COLOUR_BACKWARD)
 		fdf->xy.z_colour_index--;
-	else if (key_code == L)
+	else if (key_code == NO_Z_COLOUR_FORWARD)
 		fdf->xy.no_z_colour_index++;
-	else if (key_code == K)
+	else if (key_code == NO_Z_COLOUR_BACKWARD)
 		fdf->xy.no_z_colour_index--;
-	else if (key_code == H)
+	else if (key_code == HELP_LOL)
 		fdf->consts.prank_flag += 1;
-	else if (key_code == M)
+	else if (key_code == MENU)
 		fdf->consts.help_flag += 1;
 	else
 		transformations(key_code, fdf);
