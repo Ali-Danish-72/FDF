@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:14:14 by mdanish           #+#    #+#             */
-/*   Updated: 2024/02/01 21:30:30 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/08/31 21:36:36 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,59 @@
 # define FDF_H
 
 # include "libft/libft.h"
-# include "minilibx/mlx.h"
 # include <math.h>
+
+# if __APPLE__
+#  include "minilibx-mac/mlx.h"
+#  define ESCAPE 53
+#  define X_NEGATIVE_ROTATE 12
+#  define X_POSITIVE_ROTATE 13
+#  define Y_NEGATIVE_ROTATE 0
+#  define Y_POSITIVE_ROTATE 1
+#  define Z_NEGATIVE_ROTATE 6
+#  define Z_POSITIVE_ROTATE 7
+#  define Z_COLOUR_FORWARD 31
+#  define Z_COLOUR_BACKWARD 34
+#  define NO_Z_COLOUR_FORWARD 37
+#  define NO_Z_COLOUR_BACKWARD 40
+#  define HELP_LOL 4
+#  define MENU 46
+#  define TRANSLATE_LEFT 123
+#  define TRANSLATE_RIGHT 124
+#  define TRANSLATE_UP 126
+#  define TRANSLATE_DOWN 125
+#  define ZOOM_IN 24
+#  define ZOOM_OUT 27
+#  define PROJECTION1 18
+#  define PROJECTION2 19
+#  define PROJECTION3 20
+#  define PROJECTION4 21
+# elif __linux__
+#  include "minilibx-linux/mlx.h"
+#  define ESCAPE 65307
+#  define X_NEGATIVE_ROTATE 113
+#  define X_POSITIVE_ROTATE 119
+#  define Y_NEGATIVE_ROTATE 97
+#  define Y_POSITIVE_ROTATE 115
+#  define Z_NEGATIVE_ROTATE 122
+#  define Z_POSITIVE_ROTATE 120
+#  define Z_COLOUR_FORWARD 111
+#  define Z_COLOUR_BACKWARD 105
+#  define NO_Z_COLOUR_FORWARD 108
+#  define NO_Z_COLOUR_BACKWARD 107
+#  define HELP_LOL 104
+#  define MENU 109
+#  define TRANSLATE_LEFT 65361
+#  define TRANSLATE_RIGHT 65363
+#  define TRANSLATE_UP 65362
+#  define TRANSLATE_DOWN 65364
+#  define ZOOM_IN 61
+#  define ZOOM_OUT 45
+#  define PROJECTION1 49
+#  define PROJECTION2 50
+#  define PROJECTION3 51
+#  define PROJECTION4 52
+# endif
 
 /*		An enum to identify the projection currently in display.			*/
 typedef enum e_projection
@@ -53,7 +104,7 @@ typedef struct s_mlx
 	void			*image;
 }					t_mlx;
 
-/*		Contains all data related to (x, y) as well as rotation constants.	*/
+/*		Contains all data related to (x, y)									*/
 typedef struct s_coordinates
 {
 	float			x_1;
@@ -74,7 +125,7 @@ typedef struct s_coordinates
 	unsigned int	colours[7];
 }					t_coords;
 
-/*		Contains all data related to the transformation constants.			*/
+/*		Contains all data related to the transformation rotation constants.	*/
 typedef struct s_transformations
 {
 	float			rotation_x;
@@ -131,7 +182,7 @@ void			call_exit(int status, t_fdf *fdf);
 int				destroy_window(t_fdf *fdf);
 void			free_data(t_fdf *fdf);
 
-//	Exit `odes:
+//	Exit codes:
 //	0 = Successful completion of the program.
 //	1 = Incorrect number of arguments.
 //	2 = Incorrect extension of file detected.
