@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_destroy_display.c                              :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mg <mg@student.42.fr>                      +#+  +:+       +#+        */
+/*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/03 18:56:35 by mg                #+#    #+#             */
-/*   Updated: 2020/10/04 01:55:35 by mg               ###   ########.fr       */
+/*   Created: 2023/07/03 16:44:37 by mdanish           #+#    #+#             */
+/*   Updated: 2023/12/23 20:38:32 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "mlx_int.h"
+#include "../../libft.h"
 
-int	mlx_destroy_display(t_xvar *xvar)
+void	*ft_memset(void *string, int character, size_t length)
 {
-	XCloseDisplay(xvar->display);
+	unsigned char	*str;
+
+	if (!string)
+		return (NULL);
+	str = (unsigned char *)string;
+	while (length--)
+		*str++ = character;
+	return (string);
 }

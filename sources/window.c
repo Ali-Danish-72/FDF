@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:40:42 by mdanish           #+#    #+#             */
-/*   Updated: 2024/08/31 17:20:51 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/02/01 20:45:59 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,9 @@ void	calculate_constants(float alpha, float beta, float gamma, t_fdf *fdf)
 		fdf->xy.x_const_y * (fdf->map.map_height / 2.0);
 	middle_point_y = fdf->xy.y_const_x * (fdf->map.map_width / 2.0) + \
 		fdf->xy.y_const_y * (fdf->map.map_height / 2.0);
-	fdf->consts.x_offset = 850 - middle_point_x * fdf->consts.spacing + \
+	fdf->consts.x_offset = 800 - middle_point_x * fdf->consts.spacing + \
 		fdf->consts.translate_x;
-	fdf->consts.y_offset = 478 - middle_point_y * fdf->consts.spacing + \
+	fdf->consts.y_offset = 600 - middle_point_y * fdf->consts.spacing + \
 		fdf->consts.translate_y;
 }
 
@@ -106,8 +106,8 @@ void	initialise_window(t_fdf fdf)
 	fdf.mlx.window = mlx_new_window(fdf.mlx.mlx, fdf.map.size_x, fdf.map.size_y,
 			"FDF projection - Property of mdanish");
 	mlx_mouse_hook(fdf.mlx.window, identify_mouse, &fdf);
-	mlx_hook(fdf.mlx.window, 2, 1, identify_key, &fdf);
+	mlx_hook(fdf.mlx.window, 2, 0, identify_key, &fdf);
 	mlx_hook(fdf.mlx.window, 17, 0, destroy_window, &fdf);
-	execute_projection(&fdf, PROJECTION1);
+	execute_projection(&fdf, 18);
 	mlx_loop(fdf.mlx.mlx);
 }

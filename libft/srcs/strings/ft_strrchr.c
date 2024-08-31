@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/05 08:28:07 by mdanish           #+#    #+#             */
-/*   Updated: 2024/02/01 21:03:18 by mdanish          ###   ########.fr       */
+/*   Created: 2023/07/04 11:38:19 by mdanish           #+#    #+#             */
+/*   Updated: 2023/12/23 20:25:18 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+char	*ft_strrchr(char const *string, int character)
 {
-	void	*pointer;
+	size_t	string_length;
 
-	if (size && (count > (UINT32_MAX / size)))
-		return (NULL);
-	pointer = (void *)malloc(count * size);
-	if (!pointer)
-		return (NULL);
-	ft_memset(pointer, 0, (count * size));
-	return (pointer);
+	string_length = ft_strlen(string);
+	if ((unsigned char)character == 0)
+		return ((char *)(string + string_length));
+	while (string_length-- > 0)
+		if (*(string + string_length) == (unsigned char)character)
+			return ((char *)(string + string_length));
+	return (NULL);
 }

@@ -1,26 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/05 08:28:07 by mdanish           #+#    #+#             */
-/*   Updated: 2024/02/01 21:03:18 by mdanish          ###   ########.fr       */
+/*   Created: 2023/07/04 17:56:24 by mdanish           #+#    #+#             */
+/*   Updated: 2023/12/23 20:25:41 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../libft.h"
 
-void	*ft_calloc(size_t count, size_t size)
+int	needle_match(char const *haystack, char const *needle, size_t length)
 {
-	void	*pointer;
+	while (length && *haystack++ == *needle++)
+		length--;
+	if (!length)
+		return (1);
+	return (0);
+}
 
-	if (size && (count > (UINT32_MAX / size)))
-		return (NULL);
-	pointer = (void *)malloc(count * size);
-	if (!pointer)
-		return (NULL);
-	ft_memset(pointer, 0, (count * size));
-	return (pointer);
+char	*ft_strnstr(char const *haystack, char const *needle, size_t length)
+{
+	if (!*needle)
+		return ((char *)haystack);
+	while (*haystack)
+	{
+		if (needle_match(haystack, needle, length))
+			return ((char *)haystack);
+		haystack++;
+	}
+	return (NULL);
 }

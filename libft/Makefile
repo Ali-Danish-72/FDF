@@ -55,7 +55,7 @@ $(GNL_OBJS): %.o: %.c
 #                                   MEMORY                                    #
 ###############################################################################
 MEMORY_DIR = $(SRC_PATH)memory/
-MEMORY_FILES = ft_calloc.c
+MEMORY_FILES = ft_calloc.c ft_memset.c
 MEMORY_SRCS = $(addprefix $(MEMORY_DIR), $(MEMORY_FILES))
 MEMORY_OBJS = $(MEMORY_SRCS:.c=.o)
 

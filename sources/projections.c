@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:41:54 by mdanish           #+#    #+#             */
-/*   Updated: 2024/08/31 17:03:44 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/02/01 19:49:15 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,22 +96,22 @@ void	build_image(t_fdf *fdf)
 
 void	execute_projection(t_fdf *fdf, int projection_code)
 {
-	if (projection_code == PROJECTION1)
+	if (projection_code == 18)
 	{
 		fdf->projection = ISOMETRIC_VIEW;
 		calculate_constants(235, 0, -135, fdf);
 	}
-	else if (projection_code == PROJECTION2)
+	else if (projection_code == 19)
 	{
 		fdf->projection = FRONT_VIEW;
 		calculate_constants(90, 0, 0, fdf);
 	}
-	else if (projection_code == PROJECTION3)
+	else if (projection_code == 20)
 	{
 		fdf->projection = SIDE_VIEW;
 		calculate_constants(0, 90, 0, fdf);
 	}
-	else if (projection_code == PROJECTION4)
+	else if (projection_code == 21)
 	{
 		fdf->projection = TOP_VIEW;
 		calculate_constants(0, 0, 0, fdf);
