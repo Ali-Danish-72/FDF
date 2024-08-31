@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 18:20:59 by mdanish           #+#    #+#             */
-/*   Updated: 2024/08/29 22:12:40 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/08/31 17:20:30 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,8 @@ void	initialise_constants(t_fdf *fdf)
 	fdf->map.single_line = NULL;
 	fdf->map.map_colors = NULL;
 	fdf->map.map_numbers = NULL;
-	fdf->map.size_x = 1600;
-	fdf->map.size_y = 1200;
+	fdf->map.size_x = 1700;
+	fdf->map.size_y = 956;
 	fdf->consts.spacing = 30;
 	fdf->consts.translate_x = 0;
 	fdf->consts.translate_y = 0;
