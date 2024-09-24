@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:35:33 by mdanish           #+#    #+#             */
-/*   Updated: 2024/08/31 21:36:21 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/09/24 01:44:57 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,32 +27,45 @@ int	switch_projection(int key_code, t_fdf *fdf)
 	return (0);
 }
 
+void	reset_projection(t_fdf *fdf)
+{
+	fdf->consts.spacing = 30;
+	fdf->consts.translate_x = 0;
+	fdf->consts.translate_y = 0;
+	fdf->consts.rotation_x = 0;
+	fdf->consts.rotation_y = 0;
+	fdf->consts.rotation_z = 0;
+	fdf->xy.z_colour_index = 3;
+	fdf->xy.no_z_colour_index = 0;
+	fdf->projection = ISOMETRIC_VIEW;
+}
+
 void	transformations(int key_code, t_fdf *fdf)
 {
 	if (key_code == ZOOM_IN)
-		fdf->consts.spacing += 1;
+		fdf->consts.spacing += ZOOM_CONSTANT;
 	else if (key_code == ZOOM_OUT)
-		fdf->consts.spacing -= 1;
+		fdf->consts.spacing -= ZOOM_CONSTANT;
 	else if (key_code == TRANSLATE_LEFT)
-		fdf->consts.translate_x -= 10;
+		fdf->consts.translate_x -= TRANSLATION_CONSTANT;
 	else if (key_code == TRANSLATE_RIGHT)
-		fdf->consts.translate_x += 10;
+		fdf->consts.translate_x += TRANSLATION_CONSTANT;
 	else if (key_code == TRANSLATE_DOWN)
-		fdf->consts.translate_y += 10;
+		fdf->consts.translate_y += TRANSLATION_CONSTANT;
 	else if (key_code == TRANSLATE_UP)
-		fdf->consts.translate_y -= 10;
+		fdf->consts.translate_y -= TRANSLATION_CONSTANT;
 	else if (key_code == X_POSITIVE_ROTATE)
-		fdf->consts.rotation_x += 5;
+		fdf->consts.rotation_x += ROTATION_CONSTANT;
 	else if (key_code == X_NEGATIVE_ROTATE)
-		fdf->consts.rotation_x -= 5;
+		fdf->consts.rotation_x -= ROTATION_CONSTANT;
 	else if (key_code == Y_POSITIVE_ROTATE)
-		fdf->consts.rotation_y += 5;
+		fdf->consts.rotation_y += ROTATION_CONSTANT;
 	else if (key_code == Y_NEGATIVE_ROTATE)
-		fdf->consts.rotation_y -= 5;
+		fdf->consts.rotation_y -= ROTATION_CONSTANT;
 	else if (key_code == Z_POSITIVE_ROTATE)
-		fdf->consts.rotation_z += 5;
+		fdf->consts.rotation_z += ROTATION_CONSTANT;
 	else if (key_code == Z_NEGATIVE_ROTATE)
-		fdf->consts.rotation_z -= 5;
+		fdf->consts.rotation_z -= ROTATION_CONSTANT;
 }
 
 int	identify_key(int key_code, t_fdf *fdf)
@@ -71,17 +84,17 @@ int	identify_key(int key_code, t_fdf *fdf)
 		fdf->consts.prank_flag += 1;
 	else if (key_code == MENU)
 		fdf->consts.help_flag += 1;
-	else
-		transformations(key_code, fdf);
+	else if (key_code == RESET)
+		reset_projection(fdf);
 	if (fdf->xy.z_colour_index == 7)
 		fdf->xy.z_colour_index = 0;
-	if (fdf->xy.z_colour_index == -1)
+	else if (fdf->xy.z_colour_index == -1)
 		fdf->xy.z_colour_index = 6;
-	if (fdf->xy.no_z_colour_index == 7)
+	else if (fdf->xy.no_z_colour_index == 7)
 		fdf->xy.no_z_colour_index = 0;
-	if (fdf->xy.no_z_colour_index == -1)
+	else if (fdf->xy.no_z_colour_index == -1)
 		fdf->xy.no_z_colour_index = 6;
-	return (switch_projection(key_code, fdf));
+	return (transformations(key_code, fdf), switch_projection(key_code, fdf));
 }
 
 int	identify_mouse(int mouse_code, int x, int y, t_fdf *fdf)

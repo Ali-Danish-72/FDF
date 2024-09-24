@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/14 15:40:42 by mdanish           #+#    #+#             */
-/*   Updated: 2024/08/31 17:20:51 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/09/25 01:21:50 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	print_menu(t_fdf *fdf)
 		"Switch Projections using: ");
 	mlx_string_put(fdf->mlx.mlx, fdf->mlx.window, 20, 180, 0xFFFFFF,
 		"Isometric [ 1 ], Front [ 2 ], Side [ 3 ], Top-Down [ 4 ]");
+	mlx_string_put(fdf->mlx.mlx, fdf->mlx.window, 10, 200, 0xFFFFFF,
+		"Reset the projection using [ 0 ]");
 	if (fdf->consts.prank_flag % 2)
 		fdf->consts.prank_flag += 1;
 }
