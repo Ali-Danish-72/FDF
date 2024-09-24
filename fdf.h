@@ -6,7 +6,7 @@
 /*   By: mdanish <mdanish@student.42abudhabi.ae>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/07 15:14:14 by mdanish           #+#    #+#             */
-/*   Updated: 2024/08/31 21:36:36 by mdanish          ###   ########.fr       */
+/*   Updated: 2024/09/24 01:37:45 by mdanish          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 #  define PROJECTION2 19
 #  define PROJECTION3 20
 #  define PROJECTION4 21
+#  define RESET 29
 # elif __linux__
 #  include "minilibx-linux/mlx.h"
 #  define ESCAPE 65307
@@ -66,7 +67,12 @@
 #  define PROJECTION2 50
 #  define PROJECTION3 51
 #  define PROJECTION4 52
+#  define RESET 48
 # endif
+
+# define ROTATION_CONSTANT 5
+# define TRANSLATION_CONSTANT 10
+# define ZOOM_CONSTANT 1
 
 /*		An enum to identify the projection currently in display.			*/
 typedef enum e_projection
